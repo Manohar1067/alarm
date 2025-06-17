@@ -1,6 +1,6 @@
 let alarmTimeout;
-
-document.getElementById("formatSelector").addEventListener("change", updateCurrentTime);
+let alarmAudio = new Audio("https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg");
+alarmAudio.loop = true; // Loop the sound
 
 function updateCurrentTime() {
   const format = document.getElementById("formatSelector").value;
@@ -20,7 +20,6 @@ function updateCurrentTime() {
 
   document.getElementById("currentTime").textContent = display;
 }
-
 setInterval(updateCurrentTime, 1000);
 updateCurrentTime();
 
@@ -49,17 +48,27 @@ function setAlarm() {
   const timeToAlarm = alarmTime - now;
 
   clearTimeout(alarmTimeout);
-
   status.textContent = `✅ Alarm set for ${alarmTime.toLocaleTimeString()}`;
 
   alarmTimeout = setTimeout(() => {
-    playAlarmSound();
-    alert("⏰ Alarm ringing!");
-    status.textContent = "Alarm finished!";
+    ringAlarm();
   }, timeToAlarm);
 }
 
-function playAlarmSound() {
-  const audio = new Audio("https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg");
-  audio.play();
+function ringAlarm() {
+  document.getElementById("status").textContent = "⏰ Alarm ringing!";
+  document.getElementById("stopButton").style.display = "inline-block";
+
+  // Try to play the sound
+  alarmAudio.play().catch(() => {
+    alert("Alarm is ringing! Please click 'OK' to hear it.");
+    alarmAudio.play(); // Try again after interaction
+  });
+}
+
+function stopAlarm() {
+  alarmAudio.pause();
+  alarmAudio.currentTime = 0;
+  document.getElementById("status").textContent = "🔕 Alarm stopped";
+  document.getElementById("stopButton").style.display = "none";
 }
