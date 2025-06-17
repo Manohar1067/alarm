@@ -1,42 +1,71 @@
-/* styles.css */
 body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #c0ecd5;
-    background-image: url(bg.jpg);
-    margin: 0;
-    overflow: hidden;
+  background-image: url('https://images.unsplash.com/photo-1505483531331-fc3cf89fd382');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
 }
 
-.alarm-clock {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
+.container {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 40px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+  width: 90%;
+  max-width: 420px;
 }
 
-.time-display {
-    font-size: 48px;
-    margin: 20px 0;
+.top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
 }
 
-.alarm-set {
-    margin: 20px 0;
+#currentTime {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.time-setting {
+  margin-top: 15px;
+}
+
+input[type="number"],
+select {
+  padding: 10px;
+  font-size: 1em;
+  margin: 8px 4px;
+  width: 60px;
+  border: none;
+  border-radius: 5px;
+}
+
+select#formatSelector {
+  width: 150px;
+}
+
+select#amPm {
+  width: 70px;
 }
 
 button {
-    padding: 10px 20px;
-    font-size: 16px;
-    margin: 5px;
-    cursor: pointer;
+  padding: 10px 20px;
+  font-size: 1em;
+  background-color: #00c9a7;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-#alarm-status {
-    margin-top: 20px;
-    font-size: 18px;
-    color: #333;
+button:hover {
+  background-color: #009e83;
 }
