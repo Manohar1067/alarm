@@ -1,6 +1,6 @@
 let alarmTimeout;
 let alarmAudio = new Audio("https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg");
-alarmAudio.loop = true; // Loop the sound
+alarmAudio.loop = true;
 
 function updateCurrentTime() {
   const format = document.getElementById("formatSelector").value;
@@ -57,12 +57,11 @@ function setAlarm() {
 
 function ringAlarm() {
   document.getElementById("status").textContent = "⏰ Alarm ringing!";
-  document.getElementById("stopButton").style.display = "inline-block";
+  document.getElementById("alarmPopup").style.display = "flex";
 
-  // Try to play the sound
-  alarmAudio.play().catch(() => {
-    alert("Alarm is ringing! Please click 'OK' to hear it.");
-    alarmAudio.play(); // Try again after interaction
+  alarmAudio.play().catch((err) => {
+    console.error("Autoplay failed:", err);
+    alert("Please interact with the page (click anywhere) to allow sound.");
   });
 }
 
@@ -70,5 +69,5 @@ function stopAlarm() {
   alarmAudio.pause();
   alarmAudio.currentTime = 0;
   document.getElementById("status").textContent = "🔕 Alarm stopped";
-  document.getElementById("stopButton").style.display = "none";
+  document.getElementById("alarmPopup").style.display = "none";
 }

@@ -4,24 +4,25 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Alarm Clock</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
   <div class="container">
-    <div class="top-row">
-      <div id="currentTime"></div>
-      <select id="formatSelector">
-        <option value="12">12-hour</option>
-        <option value="24">Railway (24-hour)</option>
+    <h1>⏰ Alarm Clock</h1>
+
+    <div class="clock">
+      <h2 id="currentTime">00:00:00</h2>
+      <label for="formatSelector">Time Format:</label>
+      <select id="formatSelector" onchange="updateCurrentTime()">
+        <option value="12">12-Hour</option>
+        <option value="24">Railway (24-Hour)</option>
       </select>
     </div>
 
-    <h1>⏰ Set Alarm</h1>
-
-    <div class="time-setting">
-      <input type="number" id="alarmHour" min="1" max="12" placeholder="HH" />
-      <span>:</span>
-      <input type="number" id="alarmMinute" min="0" max="59" placeholder="MM" />
+    <div class="alarm-settings">
+      <h3>Set Alarm</h3>
+      <input type="number" id="alarmHour" placeholder="HH" min="1" max="12">
+      <input type="number" id="alarmMinute" placeholder="MM" min="0" max="59">
       <select id="amPm">
         <option value="AM">AM</option>
         <option value="PM">PM</option>
@@ -29,7 +30,15 @@
       <button onclick="setAlarm()">Set Alarm</button>
     </div>
 
-    <p id="status"></p>
+    <p id="status">No alarm set</p>
+  </div>
+
+  <!-- Popup for alarm ringing -->
+  <div id="alarmPopup" class="popup">
+    <div class="popup-content">
+      <h2>🔔 Your alarm is ringing!</h2>
+      <button onclick="stopAlarm()">Stop Alarm</button>
+    </div>
   </div>
 
   <script src="script.js"></script>

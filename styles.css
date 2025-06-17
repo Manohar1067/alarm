@@ -1,71 +1,80 @@
 body {
-  background-image: url('https://images.unsplash.com/photo-1505483531331-fc3cf89fd382');
+  font-family: Arial, sans-serif;
+  background: url("https://images.unsplash.com/photo-1516575529404-529a1d7b0a67") no-repeat center center fixed;
   background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 100vh;
+  color: #fff;
   margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
+  padding: 0;
 }
 
 .container {
-  background: rgba(0, 0, 0, 0.6);
-  padding: 40px;
-  border-radius: 12px;
   text-align: center;
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-  width: 90%;
-  max-width: 420px;
+  padding: 50px;
+  background-color: rgba(0, 0, 0, 0.6);
+  margin: 50px auto;
+  max-width: 400px;
+  border-radius: 10px;
 }
 
-.top-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
+.clock h2 {
+  font-size: 2.5em;
 }
 
-#currentTime {
-  font-size: 2em;
-  font-weight: bold;
+.alarm-settings {
+  margin-top: 20px;
 }
 
-.time-setting {
-  margin-top: 15px;
-}
-
-input[type="number"],
-select {
+input, select, button {
   padding: 10px;
+  margin: 5px;
   font-size: 1em;
-  margin: 8px 4px;
-  width: 60px;
-  border: none;
   border-radius: 5px;
-}
-
-select#formatSelector {
-  width: 150px;
-}
-
-select#amPm {
-  width: 70px;
+  border: none;
 }
 
 button {
-  padding: 10px 20px;
-  font-size: 1em;
-  background-color: #00c9a7;
+  background-color: #4CAF50;
   color: white;
-  border: none;
-  border-radius: 5px;
   cursor: pointer;
 }
 
 button:hover {
-  background-color: #009e83;
+  background-color: #45a049;
+}
+
+/* Alarm popup */
+.popup {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-content {
+  background-color: white;
+  color: black;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 300px;
+}
+
+.popup-content h2 {
+  margin-bottom: 20px;
+}
+
+.popup-content button {
+  padding: 10px 20px;
+  font-size: 1em;
+  border: none;
+  border-radius: 8px;
+  background-color: #f44336;
+  color: white;
+  cursor: pointer;
 }
