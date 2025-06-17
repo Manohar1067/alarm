@@ -3,44 +3,49 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Alarm Clock</title>
-  <link rel="stylesheet" href="style.css"/>
+  <title>Alarm App</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <div class="container">
-    <h1>⏰ Alarm Clock</h1>
-
     <div class="clock">
-      <h2 id="currentTime">00:00:00</h2>
-      <label for="formatSelector">Time Format:</label>
-      <select id="formatSelector" onchange="updateCurrentTime()">
-        <option value="12">12-Hour</option>
-        <option value="24">Railway (24-Hour)</option>
-      </select>
+      <h2 id="current-time">--:--:--</h2>
     </div>
 
     <div class="alarm-settings">
-      <h3>Set Alarm</h3>
-      <input type="number" id="alarmHour" placeholder="HH" min="1" max="12">
-      <input type="number" id="alarmMinute" placeholder="MM" min="0" max="59">
-      <select id="amPm">
+      <label for="alarm-hour">Hour:</label>
+      <input type="number" id="alarm-hour" min="1" max="12" />
+
+      <label for="alarm-minute">Minute:</label>
+      <input type="number" id="alarm-minute" min="0" max="59" />
+
+      <label for="alarm-period">AM/PM:</label>
+      <select id="alarm-period">
         <option value="AM">AM</option>
         <option value="PM">PM</option>
       </select>
+
+      <br /><br />
+
+      <label for="format-toggle">Time Format:</label>
+      <select id="format-toggle">
+        <option value="12">12 Hrs</option>
+        <option value="24">Railway</option>
+      </select>
+
+      <br /><br />
       <button onclick="setAlarm()">Set Alarm</button>
     </div>
-
-    <p id="status">No alarm set</p>
   </div>
 
-  <!-- Alarm Popup -->
-  <div id="alarmPopup" class="popup">
+  <div id="alarm-popup" class="popup">
     <div class="popup-content">
-      <h2>🔔 Your alarm is ringing!</h2>
-      <button id="stopButton" onclick="stopAlarm()">Stop Alarm</button>
+      <h2>Your alarm is ringing!</h2>
+      <button onclick="stopAlarm()">Stop Alarm</button>
     </div>
   </div>
 
+  <audio id="alarm-audio" src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg" preload="auto"></audio>
   <script src="script.js"></script>
 </body>
 </html>

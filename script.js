@@ -1,73 +1,61 @@
-let alarmTimeout;
-let alarmAudio = new Audio("https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg");
-alarmAudio.loop = true;
+let alarmTime = null;
+let alarmTimeout = null;
+let is24Hour = false;
 
-function updateCurrentTime() {
-  const format = document.getElementById("formatSelector").value;
+const currentTimeDisplay = document.getElementById("current-time");
+const alarmPopup = document.getElementById("alarm-popup");
+const alarmAudio = document.getElementById("alarm-audio");
+
+function updateTime() {
   const now = new Date();
+
+  const formatToggle = document.getElementById("format-toggle").value;
+  is24Hour = formatToggle === "24";
+
   let hours = now.getHours();
-  const minutes = String(now.getMinutes()).padStart(2, "0");
-  const seconds = String(now.getSeconds()).padStart(2, "0");
-  let display;
+  let minutes = now.getMinutes();
+  let seconds = now.getSeconds();
 
-  if (format === "12") {
-    const ampm = hours >= 12 ? "PM" : "AM";
-    hours = hours % 12 || 12;
-    display = `${hours}:${minutes}:${seconds} ${ampm}`;
-  } else {
-    display = `${String(hours).padStart(2, "0")}:${minutes}:${seconds}`;
+  let displayHours = is24Hour ? hours : ((hours % 12) || 12);
+  const period = hours >= 12 ? "PM" : "AM";
+
+  const timeString = `${pad(displayHours)}:${pad(minutes)}:${pad(seconds)}${is24Hour ? "" : " " + period}`;
+  currentTimeDisplay.textContent = timeString;
+
+  const currentAlarmCompare = `${pad(displayHours)}:${pad(minutes)} ${period}`;
+  if (alarmTime === currentAlarmCompare && alarmPopup.style.display !== "flex") {
+    triggerAlarm();
   }
-
-  document.getElementById("currentTime").textContent = display;
 }
-setInterval(updateCurrentTime, 1000);
-updateCurrentTime();
+
+function pad(n) {
+  return n < 10 ? "0" + n : n;
+}
 
 function setAlarm() {
-  const hour = parseInt(document.getElementById("alarmHour").value);
-  const minute = parseInt(document.getElementById("alarmMinute").value);
-  const amPm = document.getElementById("amPm").value;
-  const status = document.getElementById("status");
+  const hour = parseInt(document.getElementById("alarm-hour").value);
+  const minute = parseInt(document.getElementById("alarm-minute").value);
+  const period = document.getElementById("alarm-period").value;
 
-  if (isNaN(hour) || isNaN(minute)) {
-    alert("Please enter a valid alarm time.");
+  if (isNaN(hour) || isNaN(minute) || hour < 1 || hour > 12 || minute < 0 || minute > 59) {
+    alert("Please enter a valid time.");
     return;
   }
 
-  let alarmHour = hour % 12;
-  if (amPm === "PM") alarmHour += 12;
-
-  const now = new Date();
-  const alarmTime = new Date(now);
-  alarmTime.setHours(alarmHour, minute, 0, 0);
-
-  if (alarmTime <= now) {
-    alarmTime.setDate(alarmTime.getDate() + 1);
-  }
-
-  const timeToAlarm = alarmTime - now;
-
-  clearTimeout(alarmTimeout);
-  status.textContent = `✅ Alarm set for ${alarmTime.toLocaleTimeString()}`;
-
-  alarmTimeout = setTimeout(() => {
-    ringAlarm();
-  }, timeToAlarm);
+  alarmTime = `${pad(hour)}:${pad(minute)} ${period}`;
+  alert(`Alarm set for ${alarmTime}`);
 }
 
-function ringAlarm() {
-  document.getElementById("status").textContent = "⏰ Alarm ringing!";
-  document.getElementById("alarmPopup").style.display = "flex";
-
-  alarmAudio.play().catch((err) => {
-    console.error("Autoplay failed:", err);
-    alert("Please click the screen once to allow sound.");
-  });
+function triggerAlarm() {
+  alarmPopup.style.display = "flex";
+  alarmAudio.play();
 }
 
 function stopAlarm() {
+  alarmPopup.style.display = "none";
   alarmAudio.pause();
   alarmAudio.currentTime = 0;
-  document.getElementById("alarmPopup").style.display = "none";
-  document.getElementById("status").textContent = "🔕 Alarm stopped";
+  alarmTime = null;
 }
+
+setInterval(updateTime, 1000);
