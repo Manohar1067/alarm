@@ -61,13 +61,13 @@ function ringAlarm() {
 
   alarmAudio.play().catch((err) => {
     console.error("Autoplay failed:", err);
-    alert("Please interact with the page (click anywhere) to allow sound.");
+    alert("Please click the screen once to allow sound.");
   });
 }
 
 function stopAlarm() {
   alarmAudio.pause();
   alarmAudio.currentTime = 0;
-  document.getElementById("status").textContent = "🔕 Alarm stopped";
   document.getElementById("alarmPopup").style.display = "none";
+  document.getElementById("status").textContent = "🔕 Alarm stopped";
 }
